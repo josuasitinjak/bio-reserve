@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>BIO-RESERVE • Smart Energy Management</title>
+  
+  <!-- Modern Clean Typography: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css?v=20261016h" />
+</head>
+<body>
+
+  <!-- Mobile Viewport Container -->
+  <div class="app-viewport">
+
+    <!-- TOP HEADER (Clean Title: BIO-RESERVE) -->
+    <header class="top-nav-bar">
+      <div class="user-profile">
+        <div class="avatar-box" title="Logo MATRIX">
+          <img src="LOGO_MATRIX.png" alt="Logo MATRIX" style="width: 100%; height: 100%; object-fit: contain; border-radius: inherit;" />
+        </div>
+        <div class="profile-text">
+          <h1 class="welcome-text">BIO-RESERVE</h1>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="notifBtn" class="circle-btn" aria-label="Pusat Peringatan">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="notif-badge-dot active" id="notifBadgeDot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCROLLABLE CONTENT BODY -->
+    <main class="main-content-scroll">
+
+      <!-- ================= TAB VIEW 1: DASHBOARD (HOME) ================= -->
+      <div class="page-view active" id="pageDashboard">
+
+        <!-- HERO BLUE CARD (Matches user screenshot) -->
+        <section class="hero-blue-card">
+          <!-- Left: Circle Dial -->
+          <div class="hero-soc-circle">
+            <svg class="hero-circle-svg" viewBox="0 0 100 100">
+              <circle class="circle-bg" cx="50" cy="50" r="40"></circle>
+              <circle class="circle-bar" id="heroCircleBar" cx="50" cy="50" r="40"></circle>
+            </svg>
+            <div class="hero-circle-text">
+              <span class="hero-soc-num" id="heroSocNum">24.7</span><span class="hero-soc-percent">%</span>
+            </div>
+          </div>
+
+          <!-- Center: MODE SHEDDING + Cadangan Biogas + 16.2 Wh dari 65.4 Wh -->
+          <div class="hero-titles">
+            <span class="hero-badge-pill" id="heroStatusBadge">MODE SHEDDING</span>
+            <h2 class="hero-heading">Cadangan Biogas</h2>
+            <span class="hero-sub" id="heroEnergySub">16.2 Wh dari 65.4 Wh</span>
+          </div>
+
+          <!-- Right: Durasi Pasokan 9.7 Menit Glass Bubble -->
+          <div class="duration-highlight-bubble">
+            <span class="dur-label">Durasi Pasokan</span>
+            <span class="dur-number" id="heroDurationNum">9.7</span>
+            <span class="dur-unit" id="heroDurationUnit">Menit</span>
+          </div>
+        </section>
+
+        <!-- 2. GRAFIK TERINTEGRASI LANGSUNG DI DASHBOARD (Real-Time Energy Monitoring) -->
+        <section class="dash-chart-section">
+          <div class="dash-chart-card">
+            <div class="dash-chart-header">
+              <div class="dash-chart-title-wrap">
+                <div class="dash-live-indicator">
+                  <span class="live-dot-pulse"></span>
+                  <span class="live-text-tag">LIVE TELEMETRI</span>
+                </div>
+                <h3 class="dash-chart-heading">Grafik Pemantauan Energi Real-Time</h3>
+              </div>
+              <span class="dash-chart-status-pill stat-pill-red" id="dashChartStatusPill">SOC 24.7% • Mode Shedding</span>
+            </div>
+
+            <!-- Mini Live Canvas Plotter -->
+            <div class="dash-canvas-container">
+              <canvas id="dashCanvas" width="380" height="140"></canvas>
+            </div>
+
+            <!-- Chart Footer Meta Legend -->
+            <div class="dash-chart-footer">
+              <div class="dash-footer-item">
+                <span class="dash-footer-dot dot-blue"></span>
+                <span>Tren SOC Real-Time</span>
+              </div>
+              <div class="dash-footer-item">
+                <span class="dash-footer-dot dot-red"></span>
+                <span>Ambang Proteksi (25%)</span>
+              </div>
+              <div class="dash-footer-item right-align">
+                <span class="dash-freq-tag">Update 2.0s</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. 4 PRIMARY CORE METRICS (State of Charge, Sisa Energi, Daya Beban, Durasi Pasokan) -->
+        <section class="core-metrics-quad-grid">
+          <!-- Metric 1: State of Charge -->
+          <div class="quad-metric-card">
+            <div class="quad-metric-head">
+              <div class="quad-icon-box bg-blue-soft text-blue">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <path d="M18 20V10"></path>
+                  <path d="M12 20V4"></path>
+                  <path d="M6 20v-6"></path>
+                </svg>
+              </div>
+              <span class="quad-pill-badge badge-blue">Proteksi 25%</span>
+            </div>
+            <span class="quad-metric-title">State of Charge</span>
+            <div class="quad-metric-digits">
+              <strong class="quad-big-num" id="quadSocNum">24.7</strong>
+              <span class="quad-num-unit">%</span>
+            </div>
+            <span class="quad-metric-sub">Batas Kritis 25.0%</span>
+          </div>
+
+          <!-- Metric 2: Sisa Energi -->
+          <div class="quad-metric-card">
+            <div class="quad-metric-head">
+              <div class="quad-icon-box bg-emerald-soft text-emerald">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <path d="M6 3h12a3 3 0 0 1 3 3v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a3 3 0 0 1 3-3z"></path>
+                  <line x1="8" y1="10" x2="16" y2="10"></line>
+                  <line x1="8" y1="14" x2="12" y2="14"></line>
+                </svg>
+              </div>
+              <span class="quad-pill-badge badge-green" id="quadPressureChip">2.47 kPa</span>
+            </div>
+            <span class="quad-metric-title">Sisa Energi</span>
+            <div class="quad-metric-digits">
+              <strong class="quad-big-num" id="quadEnergyWh">16.2</strong>
+              <span class="quad-num-unit">Wh</span>
+            </div>
+            <span class="quad-metric-sub" id="quadVolumeSub">Tekanan: 2.47 kPa (10 kPa ≡ 100 L)</span>
+          </div>
+
+          <!-- Metric 3: Daya Beban -->
+          <div class="quad-metric-card">
+            <div class="quad-metric-head">
+              <div class="quad-icon-box bg-amber-soft text-amber">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <span class="quad-pill-badge badge-amber" id="quadShedSavingsBadge">Hemat 85.7%</span>
+            </div>
+            <span class="quad-metric-title">Daya Beban</span>
+            <div class="quad-metric-digits">
+              <strong class="quad-big-num" id="statWattsNum">100</strong>
+              <span class="quad-num-unit">Watt</span>
+            </div>
+            <span class="quad-metric-sub" id="statPowerSub">Beban 600W Ditunda</span>
+          </div>
+
+          <!-- Metric 4: Durasi Pasokan -->
+          <div class="quad-metric-card">
+            <div class="quad-metric-head">
+              <div class="quad-icon-box bg-purple-soft text-purple">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <span class="quad-pill-badge badge-purple" id="quadDurationBadge">Kritis Terjaga</span>
+            </div>
+            <span class="quad-metric-title">Durasi Pasokan</span>
+            <div class="quad-metric-digits">
+              <strong class="quad-big-num text-emerald" id="quadDurationVal">9.8</strong>
+              <span class="quad-num-unit" id="quadDurationUnit">Menit</span>
+            </div>
+            <span class="quad-metric-sub" id="quadDurationSub">Pompa & Pendingin Susu Aktif</span>
+          </div>
+        </section>
+
+        <!-- DEVICES & RELAY CONTROLLER (With Category Filter Placed Right Above It) -->
+        <section class="devices-section">
+          
+          <div class="section-heading-bar">
+            <div>
+              <h3 class="section-title-clean">Perangkat Listrik & Relay</h3>
+              <span class="section-sub-clean">Shedding otomatis saat cadangan &le; 25%</span>
+            </div>
+            <span class="auto-active-badge">
+              <span class="dot-live"></span>
+              Auto Relay
+            </span>
+          </div>
+
+          <!-- Filter Pills for Devices -->
+          <div class="device-filter-pills">
+            <button class="cat-pill active" data-category="all">Semua</button>
+            <button class="cat-pill" data-category="critical">Kritis (Prioritas 1)</button>
+            <button class="cat-pill" data-category="noncritical">Nonkritis (Prioritas 2)</button>
+          </div>
+
+          <div class="devices-card-grid">
+
+            <!-- Device 1: Pompa Air (Kritis) -->
+            <div class="device-card-item is-critical" data-category="critical">
+              <div class="device-header-row">
+                <div class="device-avatar avatar-blue">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                  </svg>
+                </div>
+                <span class="priority-label label-crit"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px; margin-right:3px;"><path d="M18 11H16V7a4 4 0 0 0-8 0v4H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-6 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm2-7h-4V7a2 2 0 0 1 4 0v4z"/></svg>Prioritas 1 • Terkunci</span>
+              </div>
+              <div class="device-text-meta">
+                <h4 class="device-item-name">Pompa Air</h4>
+                <span class="device-item-power">60 Watt • Minum 300 Sapi</span>
+              </div>
+              <div class="device-action-row">
+                <span class="relay-state-text text-blue">Aktif</span>
+                <div class="relay-switch-locked-wrap">
+                  <span class="interlock-badge" title="Interlock aktif — tidak dapat dimatikan">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M18 11H16V7a4 4 0 0 0-8 0v4H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-6 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm2-7h-4V7a2 2 0 0 1 4 0v4z"/></svg>
+                    Terkunci
+                  </span>
+                  <label class="dribbble-switch disabled" title="Terkunci: Prioritas 1 selalu aktif">
+                    <input type="checkbox" checked disabled />
+                    <span class="dribbble-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Device 2: Pendingin Susu (Kritis) -->
+            <div class="device-card-item is-critical" data-category="critical">
+              <div class="device-header-row">
+                <div class="device-avatar avatar-cyan">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                    <line x1="4" y1="10" x2="20" y2="10"></line>
+                    <circle cx="15" cy="6" r="1"></circle>
+                    <circle cx="15" cy="15" r="1"></circle>
+                  </svg>
+                </div>
+                <span class="priority-label label-crit"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px; margin-right:3px;"><path d="M18 11H16V7a4 4 0 0 0-8 0v4H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-6 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm2-7h-4V7a2 2 0 0 1 4 0v4z"/></svg>Prioritas 1 • Terkunci</span>
+              </div>
+              <div class="device-text-meta">
+                <h4 class="device-item-name">Pendingin Susu</h4>
+                <span class="device-item-power">40 Watt • Mutu Susu Segar</span>
+              </div>
+              <div class="device-action-row">
+                <span class="relay-state-text text-blue">Aktif</span>
+                <div class="relay-switch-locked-wrap">
+                  <span class="interlock-badge" title="Interlock aktif — tidak dapat dimatikan">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M18 11H16V7a4 4 0 0 0-8 0v4H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zm-6 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm2-7h-4V7a2 2 0 0 1 4 0v4z"/></svg>
+                    Terkunci
+                  </span>
+                  <label class="dribbble-switch disabled" title="Terkunci: Prioritas 1 selalu aktif">
+                    <input type="checkbox" checked disabled />
+                    <span class="dribbble-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Device 3: Lampu Kandang (Nonkritis) -->
+            <div class="device-card-item is-shedded" id="cardDeviceLight" data-category="noncritical">
+              <div class="device-header-row">
+                <div class="device-avatar avatar-amber">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                  </svg>
+                </div>
+                <span class="priority-label label-noncrit">Prioritas 2</span>
+              </div>
+              <div class="device-text-meta">
+                <h4 class="device-item-name">Lampu Tambahan</h4>
+                <span class="device-item-power">300 Watt • Penerangan</span>
+              </div>
+              <div class="device-action-row">
+                <span class="relay-state-text" id="labelLightState">Ditunda</span>
+                <label class="dribbble-switch">
+                  <input type="checkbox" id="switchLight" />
+                  <span class="dribbble-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Device 4: Kipas Ventilasi (Nonkritis) -->
+            <div class="device-card-item is-shedded" id="cardDeviceFan" data-category="noncritical">
+              <div class="device-header-row">
+                <div class="device-avatar avatar-slate">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 12c0-3 2.5-5 5-5s2 2.5 0 5-5 0-5 0zm0 0c-3 0-5-2.5-5-5s2.5-2 5 0 0 5 0 5zm0 0c0 3-2.5 5-5 5s-2-2.5 0-5 5 0 5 0zm0 0c3 0 5 2.5 5 5s-2.5 2-5 0 0-5 0-5z"></path>
+                  </svg>
+                </div>
+                <span class="priority-label label-noncrit">Prioritas 2</span>
+              </div>
+              <div class="device-text-meta">
+                <h4 class="device-item-name">Kipas Ventilasi</h4>
+                <span class="device-item-power">300 Watt • Sirkulasi</span>
+              </div>
+              <div class="device-action-row">
+                <span class="relay-state-text" id="labelFanState">Ditunda</span>
+                <label class="dribbble-switch">
+                  <input type="checkbox" id="switchFan" />
+                  <span class="dribbble-slider"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div> <!-- /pageDashboard -->
+
+      <!-- ================= TAB VIEW 2: GRAFIK & ANALITIK ================= -->
+      <div class="page-view" id="pageAnalytics">
+        
+        <section class="chart-clean-card">
+          <div class="chart-top-bar">
+            <h3 class="chart-heading" id="chartTitleText">Grafik Penggunaan Energi</h3>
+            <div class="timeframe-pills-group">
+              <button class="time-tab active" data-range="live">Live</button>
+              <button class="time-tab" data-range="day">Hari</button>
+              <button class="time-tab" data-range="week">Minggu</button>
+            </div>
+          </div>
+
+          <div class="chart-main-stat">
+            <div class="stat-number-flex">
+              <span class="chart-big-num" id="chartLiveStatVal">24.7%</span>
+              <span class="stat-pill-red" id="chartStatBadge">Mode Shedding</span>
+            </div>
+            <span class="chart-stat-sub" id="chartStatSub">Batas otomatis pemutus relay pada SOC 25.0%</span>
+          </div>
+
+          <div class="chart-canvas-box" id="chartCanvasBox">
+            <canvas id="smoothSplineCanvas" width="420" height="210"></canvas>
+            
+            <!-- Sleek Floating Tooltip (Reference Image: 13.7 GB / Dec 21 style) -->
+            <div class="chart-crypto-tooltip" id="chartCryptoTooltip">
+              <div class="ref-tooltip-val">
+                <span class="ref-tt-num" id="tooltipSoc">24.7%</span>
+                <span class="ref-tt-divider">&bull;</span>
+                <span class="ref-tt-sub" id="tooltipPower">100 W</span>
+              </div>
+              <div class="ref-tooltip-meta">
+                <span class="ref-tt-date" id="tooltipTime">14:00 WIB</span>
+                <span class="ref-tt-badge badge-normal" id="tooltipBadge">Normal</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Time Axis Labels Bar -->
+          <div class="chart-time-axis-labels" id="chartTimeAxisLabels">
+            <span>60s lalu</span>
+            <span>45s</span>
+            <span>30s</span>
+            <span>15s</span>
+            <span>Sekarang</span>
+          </div>
+
+          <div class="chart-legend-box" id="chartLegendBox">
+            <div class="legend-unit">
+              <span class="legend-dot dot-blue"></span>
+              <span id="legendLabelCurve">Tren Cadangan SOC (%)</span>
+            </div>
+            <div class="legend-unit" id="legendUnitThreshold">
+              <span class="legend-dot dot-red"></span>
+              <span>Ambang Batas Proteksi (25%)</span>
+            </div>
+          </div>
+
+          <!-- Tri-Metric Summary Row (Directly matching Reference Image: Data, Call, SMS style) -->
+          <div class="chart-tri-metrics-row" id="chartAnalyticsSummary">
+            <div class="tri-metric-item">
+              <div class="tri-icon-box icon-biogas">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v8"></path>
+                  <path d="m4.93 10.93 1.41 1.41"></path>
+                  <path d="M2 18h2"></path>
+                  <path d="M20 18h2"></path>
+                  <path d="m19.07 10.93-1.41 1.41"></path>
+                  <path d="M22 22H2"></path>
+                  <path d="m16 6-4-4-4 4"></path>
+                  <path d="M16 18a4 4 0 0 0-8 0"></path>
+                </svg>
+              </div>
+              <div class="tri-text-wrap">
+                <span class="tri-label" id="summaryLabel1">Total Biogas</span>
+                <strong class="tri-value" id="summaryVal1">3.685 L</strong>
+              </div>
+            </div>
+
+            <div class="tri-metric-item">
+              <div class="tri-icon-box icon-pump">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path>
+                </svg>
+              </div>
+              <div class="tri-text-wrap">
+                <span class="tri-label" id="summaryLabel2">Pasokan Pompa</span>
+                <strong class="tri-value text-emerald" id="summaryVal2">24/7 Aman</strong>
+              </div>
+            </div>
+
+            <div class="tri-metric-item">
+              <div class="tri-icon-box icon-savings">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m13 2-2 2.5V8l5-3-3 9 7 3-12 8 3-10-6-3 5-3"></path>
+                </svg>
+              </div>
+              <div class="tri-text-wrap">
+                <span class="tri-label" id="summaryLabel3">Hemat Beban</span>
+                <strong class="tri-value text-blue" id="summaryVal3">28.5 kWh</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SENSOR & HARDWARE TELEMETRY DIAGNOSTICS (Informatif, Interaktif & Edukatif) -->
+        <section class="section-container">
+          <div class="section-heading-bar">
+            <div>
+              <h3 class="section-title-clean">Parameter Sensor & Node</h3>
+              <span class="section-sub-clean">Telemetri perangkat keras & edge computing</span>
+            </div>
+          </div>
+
+          <div class="sensor-cards-stack">
+
+            <!-- Card 1: Sensor Tekanan MPX5010DP -->
+            <div class="sensor-hardware-card" id="cardSensorPressure">
+              <div class="hw-top-row">
+                <div class="hw-ident">
+                  <div class="hw-icon-box icon-gauge">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="m14 14-4-4"></path>
+                      <path d="M12 6v2"></path>
+                      <path d="M6 12h2"></path>
+                      <path d="M18 12h2"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="hw-name-row">
+                      <span class="hw-title">Sensor Tekanan Gas (MPX5010DP)</span>
+                      <span class="hw-badge-adc">ADC GPIO34</span>
+                    </div>
+                    <span class="hw-purpose">Deteksi volume tersisa tangki biogas Sei Temiang</span>
+                  </div>
+                </div>
+                <div class="hw-reading-box">
+                  <span class="hw-live-number" id="diagPressureVal">2.47</span>
+                  <span class="hw-live-unit">kPa</span>
+                </div>
+              </div>
+
+              <!-- Barometer Gauge Bar -->
+              <div class="hw-bar-track">
+                <div class="hw-bar-fill" id="pressureBarFill" style="width: 24.7%;"></div>
+              </div>
+
+              <div class="hw-footer-meta">
+                <span class="hw-meta-item">Tekanan: <strong id="diagVolumeSub">2.47 kPa</strong></span>
+                <span class="hw-meta-item">Pemetaan: <strong class="text-blue">10 kPa ≡ 100 L (linier)</strong></span>
+                <span class="hw-meta-item">Status: <strong class="text-amber" id="diagPressureStatus">Ambang Kritis (24.7%)</strong></span>
+              </div>
+            </div>
+
+            <!-- Card 2: Sensor Daya Listrik PZEM-004T -->
+            <div class="sensor-hardware-card" id="cardSensorPower">
+              <div class="hw-top-row">
+                <div class="hw-ident">
+                  <div class="hw-icon-box icon-power-meter">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="hw-name-row">
+                      <span class="hw-title">Sensor Daya Listrik (PZEM-004T)</span>
+                      <span class="hw-badge-comm">UART TTL (115200)</span>
+                    </div>
+                    <span class="hw-purpose">Monitoring real-time tegangan & beban aktif AC</span>
+                  </div>
+                </div>
+                <div class="hw-reading-box">
+                  <span class="hw-live-number" id="diagPowerNumber">100</span>
+                  <span class="hw-live-unit">Watt</span>
+                </div>
+              </div>
+
+              <!-- 4-Quadrant Metric Chips -->
+              <div class="pzem-quad-grid">
+                <div class="pzem-mini-chip">
+                  <span class="pzem-chip-label">Tegangan</span>
+                  <strong class="pzem-chip-val" id="diagVoltVal">220.4 V</strong>
+                </div>
+                <div class="pzem-mini-chip">
+                  <span class="pzem-chip-label">Arus Listrik</span>
+                  <strong class="pzem-chip-val" id="diagAmpsVal">0.45 A</strong>
+                </div>
+                <div class="pzem-mini-chip">
+                  <span class="pzem-chip-label">Frekuensi</span>
+                  <strong class="pzem-chip-val">50.0 Hz</strong>
+                </div>
+                <div class="pzem-mini-chip">
+                  <span class="pzem-chip-label">Power Factor</span>
+                  <strong class="pzem-chip-val">0.98 cos &phi;</strong>
+                </div>
+              </div>
+
+              <div class="hw-footer-meta">
+                <span class="hw-meta-item">Beban Kritis: <strong>100 W (Aktif)</strong></span>
+                <span class="hw-meta-item">Nonkritis: <strong class="text-rose" id="diagShedLabel">600 W (Ditunda)</strong></span>
+              </div>
+            </div>
+
+            <!-- Card 3: Mikrokontroler ESP32 Gateway (FUTURISTIC & ATTRACTIVE) -->
+            <div class="sensor-hardware-card esp32-highlight-card" id="cardSensorEsp32">
+              <div class="hw-top-row">
+                <div class="hw-ident">
+                  <div class="hw-icon-box icon-esp32">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                      <rect x="9" y="9" width="6" height="6"></rect>
+                      <line x1="9" y1="1" x2="9" y2="4"></line>
+                      <line x1="15" y1="1" x2="15" y2="4"></line>
+                      <line x1="9" y1="20" x2="9" y2="23"></line>
+                      <line x1="15" y1="20" x2="15" y2="23"></line>
+                      <line x1="20" y1="9" x2="23" y2="9"></line>
+                      <line x1="20" y1="14" x2="23" y2="14"></line>
+                      <line x1="1" y1="9" x2="4" y2="9"></line>
+                      <line x1="1" y1="14" x2="4" y2="14"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="hw-name-row">
+                      <span class="hw-title">Mikrokontroler ESP32 Node</span>
+                      <div class="esp-online-pill">
+                        <span class="esp-pulse-dot"></span>
+                        <span class="esp-online-text">ONLINE</span>
+                      </div>
+                    </div>
+                    <span class="hw-purpose">Edge Computing • FreeRTOS Load Shedding Controller</span>
+                  </div>
+                </div>
+                <div class="hw-reading-box">
+                  <span class="hw-live-number text-emerald" id="diagPingVal">24</span>
+                  <span class="hw-live-unit">ms</span>
+                </div>
+              </div>
+
+              <!-- ESP32 Telemetry Dashboard Metrics -->
+              <div class="esp-specs-grid">
+                <div class="esp-spec-box">
+                  <span class="esp-spec-label">WiFi RSSI</span>
+                  <div class="esp-spec-with-icon">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                      <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                      <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                      <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                    </svg>
+                    <strong id="diagWifiRssi">-68 dBm</strong>
+                  </div>
+                </div>
+                <div class="esp-spec-box">
+                  <span class="esp-spec-label">CPU Load</span>
+                  <strong id="diagCpuLoad">12 %</strong>
+                </div>
+                <div class="esp-spec-box">
+                  <span class="esp-spec-label">Free Heap</span>
+                  <strong id="diagFreeHeap">218 KB</strong>
+                </div>
+                <div class="esp-spec-box">
+                  <span class="esp-spec-label">Task Shedding</span>
+                  <strong class="text-blue">Auto Loop (1s)</strong>
+                </div>
+              </div>
+
+              <div class="hw-footer-meta">
+                <span class="hw-meta-item">Uptime: <strong id="diagUptime">0d 0h 14m</strong></span>
+                <span class="hw-meta-item">Protokol: <strong>MQTT / JSON</strong></span>
+              </div>
+            </div>
+
+            <!-- Card 4: 4-Channel Solid State Relay (Relay Node Controller) -->
+            <div class="sensor-hardware-card" id="cardSensorRelay">
+              <div class="hw-top-row">
+                <div class="hw-ident">
+                  <div class="hw-icon-box icon-relay">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="hw-name-row">
+                      <span class="hw-title">Modul 4-CH SSR Relay Node</span>
+                      <span class="hw-badge-comm">Optocoupler 250V/10A</span>
+                    </div>
+                    <span class="hw-purpose">Pemutus fisik beban listrik AC kandang ternak</span>
+                  </div>
+                </div>
+                <div class="hw-reading-box">
+                  <span class="hw-live-number text-blue" id="diagRelayClosedCount">2/4</span>
+                  <span class="hw-live-unit">ON</span>
+                </div>
+              </div>
+
+              <!-- Relay 4 Channels Matrix -->
+              <div class="relay-channels-grid">
+                <div class="relay-ch-pill is-closed">
+                  <span class="ch-dot"></span>
+                  <span class="ch-name">CH1: Pompa 60W</span>
+                  <span class="ch-state">CLOSED</span>
+                </div>
+                <div class="relay-ch-pill is-closed">
+                  <span class="ch-dot"></span>
+                  <span class="ch-name">CH2: Pendingin Susu 40W</span>
+                  <span class="ch-state">CLOSED</span>
+                </div>
+                <div class="relay-ch-pill is-open" id="relayCh3Pill">
+                  <span class="ch-dot"></span>
+                  <span class="ch-name">CH3: Lampu 300W</span>
+                  <span class="ch-state" id="relayCh3State">OPEN (SHED)</span>
+                </div>
+                <div class="relay-ch-pill is-open" id="relayCh4Pill">
+                  <span class="ch-dot"></span>
+                  <span class="ch-name">CH4: Kipas 300W</span>
+                  <span class="ch-state" id="relayCh4State">OPEN (SHED)</span>
+                </div>
+              </div>
+
+              <div class="hw-footer-meta">
+                <span class="hw-meta-item">Aturan: <strong>Cut-off otomatis saat SOC &le; 25%</strong></span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div> <!-- /pageAnalytics -->
+
+
+
+      <!-- ================= TAB VIEW 3: NOTIFIKASI ================= -->
+      <div class="page-view" id="pageNotifications">
+        
+        <section class="section-container">
+          <!-- Notification Center Header -->
+          <div class="notif-center-header">
+            <div class="notif-title-group">
+              <h2 class="notif-center-title">Pusat Notifikasi</h2>
+              <span class="notif-center-sub">Peringatan otomatis & telemetri BIO-RESERVE</span>
+            </div>
+          </div>
+
+          <!-- Segmented Filter Tabs (Inspirasi Image 2) -->
+          <div class="notif-segmented-bar">
+            <button class="notif-seg-pill active" data-filter="all">
+              <span>Semua</span>
+              <span class="notif-pill-count" id="notifCountAll">4</span>
+            </button>
+            <button class="notif-seg-pill" data-filter="crit">
+              <span>Kritis</span>
+              <span class="notif-pill-count" id="notifCountCrit">2</span>
+            </button>
+            <button class="notif-seg-pill" data-filter="info">
+              <span>Status</span>
+              <span class="notif-pill-count" id="notifCountInfo">2</span>
+            </button>
+          </div>
+
+          <!-- Notification Cards List (Inspirasi Image 1 & 2) -->
+          <div class="notif-cards-list" id="notifListContainer">
+            <!-- Dynamic Notification Items -->
+          </div>
+        </section>
+
+      </div> <!-- /pageNotifications -->
+
+    </main>
+
+    <!-- FLOATING TOAST PILL -->
+    <div class="floating-toast-bubble" id="floatingToastPill"></div>
+
+    <!-- CURVED BOTTOM APP NAVIGATION BAR (With Real House Icon for Home) -->
+    <nav class="curved-bottom-dock">
+      <button class="dock-item-btn active" data-target="pageDashboard">
+        <div class="dock-icon-box">
+          <!-- Real House Icon for Home -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <span class="dock-label">Home</span>
+      </button>
+
+      <button class="dock-item-btn" data-target="pageAnalytics">
+        <div class="dock-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"></path>
+            <path d="m19 9-5 5-4-4-3 3"></path>
+          </svg>
+        </div>
+        <span class="dock-label">Statistik</span>
+      </button>
+
+      <button class="dock-item-btn" data-target="pageNotifications">
+        <div class="dock-icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span class="dock-alert-dot active" id="tabBadgeDot"></span>
+        </div>
+        <span class="dock-label">Notifikasi</span>
+      </button>
+    </nav>
+
+  </div> <!-- /app-viewport -->
+
+  <script src="app.js?v=20261016R"></script>
+</body>
+</html>
