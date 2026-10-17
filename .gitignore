@@ -1,0 +1,10 @@
+# Dokumen konteks & materi privat lomba
+KONTEKS dan MATERI/
+
+# File sistem & cache
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+.vscode/
+.idea/
